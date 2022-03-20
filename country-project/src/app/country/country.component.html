@@ -1,0 +1,69 @@
+<div class="container">
+  <h2>Countries</h2>
+
+  <div class="spinner-border" role="status" *ngIf="!counties">
+    <span class="sr-only">Loading...</span>
+  </div>
+
+  <table class="table table-hover" *ngIf="counties">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Code</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let country of counties">
+      <td>{{country.name}}</td>
+      <td>{{country.countryCode}}</td>
+      <td><button type="button" class="btn btn-primary" (click)="fetchCountry(country.name)">
+        Find country information
+      </button></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyle}">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Country information</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table" *ngIf="country">
+          <thead>
+          </thead>
+          <tbody>
+          <tr>
+            <td>Name</td>
+            <td>{{country.name}}</td>
+          </tr>
+          <tr>
+            <td>CountryCode</td>
+            <td>{{country.countryCode}}</td>
+          </tr>
+          <tr>
+            <td>Capital</td>
+            <td>{{country.capital}}</td>
+          </tr>
+          <tr>
+            <td>Population</td>
+            <td>{{country.population}}</td>
+          </tr>
+          <tr>
+            <td>Flag</td>
+            <td><img src={{country.flagFileUrl}} alt="Flag" style="width: 50px;"></td>
+          </tr>
+          </tbody>
+        </table>
+        <span *ngIf="!country">No country was found</span>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="closePopup()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
