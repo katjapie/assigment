@@ -21,7 +21,7 @@ public interface CountryService {
      * Fetch country by name from external service.
      *
      * @param name country name
-     * @return list of countries which match the given name
+     * @return first country that matches the given name
      */
-    Mono<List<Country>> findCountry(String name);
+    Mono<Country> findCountry(String name);
 }

@@ -19,14 +19,13 @@ public class CountryController {
     @Autowired
     private CountryService countryService;
 
-
     @GetMapping(value = "/countries", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<List<Country>> fetchCountries() {
         return countryService.fetchCountries();
     }
 
     @GetMapping(value = "/country/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Mono<List<Country>> fetchCountry(@PathVariable String name) {
+    public Mono<Country> fetchCountry(@PathVariable String name) {
         return countryService.findCountry(name);
     }
 }

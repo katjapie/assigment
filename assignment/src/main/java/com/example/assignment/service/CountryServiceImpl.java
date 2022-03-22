@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.function.client.WebClientException;
 import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
@@ -23,31 +22,20 @@ public class CountryServiceImpl implements CountryService {
 
     @Override
     public Mono<List<Country>> fetchCountries() {
-        try {
-            Mono<List<Country>> countriesMono = webClient.get()
-                    .uri("all?fields=name,alpha2Code").retrieve()
-                    .bodyToMono(new ParameterizedTypeReference<List<Country>>() {
-                    });
-            countriesMono.subscribe();
-            return countriesMono;
-        } catch (WebClientException e) {
-            log.error("Error in fetching countries: ", e);
-        }
-        return Mono.just(new ArrayList<>());
+        Mono<List<Country>> countriesMono = webClient.get()
+                .uri("all?fields=name,alpha2Code").retrieve()
+                .bodyToMono(new ParameterizedTypeReference<List<Country>>() {
+                }).onErrorReturn(new ArrayList<>());
+        countriesMono.subscribe();
+        return countriesMono;
     }
 
     @Override
-    public Mono<List<Country>> findCountry(String name) {
-        try {
-            Mono<List<Country>> countriesMono = webClient.get()
-                    .uri("name/" + name + "?fields=name,alpha2Code,capital,population,flag").retrieve()
-                    .bodyToMono(new ParameterizedTypeReference<List<Country>>() {
-                    });
-            countriesMono.subscribe();
-            return countriesMono;
-        } catch (WebClientException e) {
-            log.error("Error in finding country: ", e);
-        }
-        return Mono.just(new ArrayList<>());
+    public Mono<Country> findCountry(String name) {
+        Mono<Country> countryMono = webClient.get()
+                .uri("name/" + name + "?fields=name,alpha2Code,capital,population,flag").retrieve()
+                .bodyToFlux(Country.class).onErrorReturn(null).next();
+        countryMono.subscribe();
+        return countryMono;
     }
 }

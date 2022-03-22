@@ -1,6 +1,7 @@
 package com.example.assignment.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Country {
@@ -23,10 +24,12 @@ public class Country {
         this.name = name;
     }
 
-    public String getCountryCode() {
+    @JsonProperty("country_code")
+    public String getAlpha2Code() {
         return alpha2Code;
     }
 
+    @JsonProperty("alpha2Code")
     public void setAlpha2Code(String alpha2Code) {
         this.alpha2Code = alpha2Code;
     }
@@ -47,10 +50,12 @@ public class Country {
         this.population = population;
     }
 
-    public String getFlagFileUrl() {
+    @JsonProperty("flag_file_url")
+    public String getFlag() {
         return flag;
     }
 
+    @JsonProperty("flag")
     public void setFlag(String flag) {
         this.flag = flag;
     }
