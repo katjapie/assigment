@@ -23,9 +23,7 @@ export class CountryComponent implements OnInit {
 
   fetchCountry(name: string): void {
     this.countryService.getCountriesByName(name).subscribe(response => {
-        if (response && response.length > 0) {
-          this.country = response[0];
-        }
+          this.country = response;
       },
       error => console.log(error),
       () => this.displayStyle = 'block');

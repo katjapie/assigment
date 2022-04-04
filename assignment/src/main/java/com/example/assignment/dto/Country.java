@@ -24,7 +24,7 @@ public class Country {
         this.name = name;
     }
 
-    @JsonProperty("country_code")
+    @JsonProperty("countryCode")
     public String getAlpha2Code() {
         return alpha2Code;
     }
@@ -50,7 +50,7 @@ public class Country {
         this.population = population;
     }
 
-    @JsonProperty("flag_file_url")
+    @JsonProperty("flagFileUrl")
     public String getFlag() {
         return flag;
     }
